@@ -1,4 +1,4 @@
 cuckoo
 ======
 
-A pretty dump Twitter clone
+A pretty dumb Twitter clone
