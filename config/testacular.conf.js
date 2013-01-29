@@ -14,6 +14,8 @@ autoWatch = true;
 
 browsers = ['Chrome'];
 
+singleRun = true;
+
 junitReporter = {
   outputFile: 'test_out/unit.xml',
   suite: 'unit'
