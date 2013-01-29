@@ -1,12 +1,8 @@
 'use strict';
 
 /* Controllers */
+var CuckooHomeCtrl = ['$scope', function($scope) {
+}];
 
-
-function MyCtrl1() {}
-MyCtrl1.$inject = [];
-
-
-function MyCtrl2() {
-}
-MyCtrl2.$inject = [];
+var CuckooUserCtrl = ['$scope', function($scope) {
+}];

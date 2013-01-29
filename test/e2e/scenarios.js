@@ -9,36 +9,36 @@ describe('my app', function() {
   });
 
 
-  it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
-    expect(browser().location().url()).toBe("/view1");
+  it('should automatically redirect to /home when location hash/fragment is empty', function() {
+    expect(browser().location().url()).toBe("/home");
   });
 
 
-  describe('view1', function() {
+  describe('home', function() {
 
     beforeEach(function() {
-      browser().navigateTo('#/view1');
+      browser().navigateTo('#/home');
     });
 
 
-    it('should render view1 when user navigates to /view1', function() {
+    it('should render home when user navigates to /home', function() {
       expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 1/);
+        toMatch(/This is the home page!/);
     });
 
   });
 
 
-  describe('view2', function() {
+  describe('user', function() {
 
     beforeEach(function() {
-      browser().navigateTo('#/view2');
+      browser().navigateTo('#/user/1');
     });
 
 
-    it('should render view2 when user navigates to /view2', function() {
+    it('should render user when user navigates to /user', function() {
       expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 2/);
+        toMatch(/User page/);
     });
 
   });
