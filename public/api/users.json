@@ -1,0 +1,12 @@
+[
+    {"login_name": "defmacro",
+     "avatar": "http://www.gravatar.com/avatar/9c85527be213734ed23c2ff233b7b5b8",
+     "description": "This is my description line, not a clue what to fill in",
+     "followed": true
+    },
+    {"login_name": "test_user",
+     "avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000",
+     "description": "I'm just an evil test account-_-",
+     "followed": false
+    }
+]

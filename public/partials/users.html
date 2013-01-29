@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="content well" ng-repeat="user in users">
+    <img class="avatar" ng-src="{{user.avatar}}"/>
+    <div class="user-info">
+      <button class="btn btn-follow" ng-click="toggleFollow(user)" ng-bind="getFollowText(user.followed)" ng-class="getFollowClass(user.followed)"></button>
+      <h3>{{user.login_name}}</h3>
+      <p>
+        {{user.description}}
+      </p>
+    </div>
+    <div class="clear-float"/>
+  </div>
+</div>
