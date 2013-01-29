@@ -2,18 +2,40 @@
 <html lang="en" ng-app="cuckooApp">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cuckoo</title>
   <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+  <link href="css/app.css" rel="stylesheet" media="screen">
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="#">Cuckoo</a>
+        <ul class="nav">
+          <li class="active">
+            <a href="#/home">Home</a>
+          </li>
+          <li class="">
+            <a href="#/users">Users</a>
+          </li>
+          <li class="">
+            <a href="#/me">Me</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-  <div ng-view></div>
-
-  <div>Angular seed app: v<span app-version></span></div>
+  <div class="container">
+    <div ng-view></div>
+  </div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
