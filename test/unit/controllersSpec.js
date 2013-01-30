@@ -7,9 +7,14 @@ describe('Cuckoo controllers', function() {
   beforeEach(module('cuckooApp.services'));
 
   describe('CuckooHomeCtrl', function(){
-    var homeCtrl, scope;
+    var homeCtrl, scope, $httpBackend;
 
-    beforeEach(inject(function($controller, $rootScope) {
+    beforeEach(inject(function($controller, $rootScope, _$httpBackend_) {
+      $httpBackend = _$httpBackend_;
+      $httpBackend.expectGET('api/me.json').
+        respond({"id": 1, "login_name": "defmacro"});
+      $httpBackend.expectGET('api/statuses.json').
+        respond([{"content": "test tweet"}]);
       scope = $rootScope.$new();
       homeCtrl = $controller(CuckooHomeCtrl, {$scope: scope});
     }));
@@ -29,7 +34,11 @@ describe('Cuckoo controllers', function() {
       routeParams = {"id": 1};
       $httpBackend = _$httpBackend_;
       $httpBackend.expectGET('api/user/1.json').
-        respond({"id": 1});
+        respond({"id": 1,
+                 "login_name": "aaa",
+                 "tweets": [
+                   {"content": "test_content"}
+                 ]});
       userCtrl = $controller(CuckooUserCtrl, {$scope: scope,
                                               $routeParams: routeParams});
     }));
@@ -38,6 +47,13 @@ describe('Cuckoo controllers', function() {
       $httpBackend.flush();
 
       expect(scope.user.id).toBe(1);
+    });
+
+    it('should add user_id and user_name to tweets', function() {
+      $httpBackend.flush();
+
+      expect(scope.user.tweets[0].user_id).toBe(1);
+      expect(scope.user.tweets[0].user_name).toEqual("aaa");
     });
 
     it('should be able to format time', function() {

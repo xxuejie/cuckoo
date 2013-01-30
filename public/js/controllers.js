@@ -24,9 +24,11 @@ var CuckooUserCtrl = ['$scope', '$routeParams', 'User', 'FollowUtils', 'TimeUtil
     var i;
 
     $scope.user = user;
-    for (i = 0; i < user.tweets.length; i++) {
-      user.tweets[i].user_id = user.id;
-      user.tweets[i].user_name = user.login_name;
+    if (user.tweets) {
+      for (i = 0; i < user.tweets.length; i++) {
+        user.tweets[i].user_id = user.id;
+        user.tweets[i].user_name = user.login_name;
+      }
     }
   });
 
