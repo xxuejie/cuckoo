@@ -23,3 +23,8 @@ button.btn-follow {
   float: right;
   margin-top: 10px;
 }
+
+.tweet-time {
+  float: right;
+  color: #999;
+}

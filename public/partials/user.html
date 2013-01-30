@@ -1,1 +1,25 @@
-<p>User page!</p>
+<div class="container">
+  <div class="content well">
+    <img class="avatar" ng-src="{{user.avatar}}"/>
+    <div class="user-info">
+      <button class="btn btn-follow" ng-click="toggleFollow(user)" ng-bind="getFollowText(user.followed)" ng-class="getFollowClass(user.followed)" ng-hide="user.self"></button>
+      <h3><a ng-href="/user/{{user.id}}">{{user.login_name}}</a></h3>
+      <p>
+        {{user.description}}
+      </p>
+    </div>
+    <div class="clear-float"/>
+  </div>
+</div>
+
+<div class="container">
+  <div class="page-header">
+    <h2>Tweets</h2>
+  </div>
+
+  <div class="content well" ng-repeat="tweet in user.tweets">
+    <h4>{{tweet.content}}</h4>
+    <h6 class="tweet-time" ng-bind="formatTime(tweet.time)"></h6>
+    <div class="clear-float"/>
+  </div>
+</div>

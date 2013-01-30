@@ -1,0 +1,38 @@
+{
+  "id": 3,
+  "login_name": "wowowowow",
+  "avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000",
+  "description": "Wow, this is my account!",
+  "followed": true,
+  "self": false,
+  "tweets": [
+    {
+      "content": "aaa",
+      "time": "1359503114287"
+    },
+    {
+      "content": "bbb",
+      "time": "1359503214287"
+    },
+    {
+      "content": "ccc",
+      "time": "1359503314287"
+    },
+    {
+      "content": "ddd",
+      "time": "1359503414287"
+    },
+    {
+      "content": "eee",
+      "time": "1300503514287"
+    },
+    {
+      "content": "fff",
+      "time": "1359503614287"
+    },
+    {
+      "content": "ggggg",
+      "time": "1359502314287"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": 2,
+  "login_name": "test_user",
+  "avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000",
+  "description": "I'm just an evil test account-_-",
+  "followed": false,
+  "self": false,
+  "tweets": []
+}
