@@ -2,8 +2,8 @@
   <div class="content well" ng-repeat="user in users">
     <img class="avatar" ng-src="{{user.avatar}}"/>
     <div class="user-info">
-      <button class="btn btn-follow" ng-click="toggleFollow(user)" ng-bind="getFollowText(user.followed)" ng-class="getFollowClass(user.followed)"></button>
-      <h3>{{user.login_name}}</h3>
+      <button class="btn btn-follow" ng-click="toggleFollow(user)" ng-bind="getFollowText(user.followed)" ng-class="getFollowClass(user.followed)" ng-hide="user.self"></button>
+      <h3><a ng-href="/user/{{user.id}}">{{user.login_name}}</a></h3>
       <p>
         {{user.description}}
       </p>
