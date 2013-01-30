@@ -34,8 +34,14 @@ describe('Cuckoo controllers', function() {
                                               $routeParams: routeParams});
     }));
 
-    it('should ....', function() {
-      //spec body
+    it('should contains one user with id', function() {
+      $httpBackend.flush();
+
+      expect(scope.user.id).toBe(1);
+    });
+
+    it('should be able to format time', function() {
+      expect(scope.formatTime(Date.now())).not.toBe(null);
     });
   });
 

@@ -7,5 +7,6 @@ angular.module('cuckooApp', ['cuckooApp.filters', 'cuckooApp.services', 'cuckooA
     $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: CuckooHomeCtrl});
     $routeProvider.when('/users', {templateUrl: 'partials/users.html', controller: CuckooUserListCtrl});
     $routeProvider.when('/user/:id', {templateUrl: 'partials/user.html', controller: CuckooUserCtrl});
+    $routeProvider.when('/me', {templateUrl: 'partials/me.html', controller: CuckooEditCtrl});
     $routeProvider.otherwise({redirectTo: '/home'});
   }]);

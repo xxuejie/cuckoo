@@ -22,3 +22,14 @@ var CuckooUserListCtrl = [ '$scope', '$http', 'FollowUtils', function($scope, $h
 
   $scope.followUtils = FollowUtils;
 }];
+
+var CuckooEditCtrl = ['$scope', '$http', function($scope, $http) {
+  $http.get('api/me.json').success(function(data) {
+    $scope.me = data;
+    $scope.origin_avatar = data.avatar;
+  })
+
+  $scope.submit = function() {
+    console.log("Submitting user: " + JSON.stringify($scope.me));
+  }
+}];

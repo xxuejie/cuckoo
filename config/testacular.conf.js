@@ -7,7 +7,8 @@ files = [
   'public/lib/angular/angular-*.js',
   'test/lib/angular/angular-mocks.js',
   'public/js/**/*.js',
-  'test/unit/**/*.js'
+  'test/unit/**/*.js',
+  'public/lib/moment.min.js'
 ];
 
 autoWatch = true;
