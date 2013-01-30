@@ -2,6 +2,8 @@
 require 'rubygems'
 require 'sinatra'
 
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "lib"))
+
 get '/' do
   redirect to('/index.html#/home')
 end
