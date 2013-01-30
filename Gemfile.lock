@@ -29,5 +29,7 @@ PLATFORMS
 
 DEPENDENCIES
   ohm
+  rack
+  rack-protection
   sinatra
   unicorn
