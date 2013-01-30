@@ -33,4 +33,18 @@ angular.module('cuckooApp.services', ['ngResource']).
         return moment(new Date(parseInt(t))).fromNow();
       }
     };
+  }).
+  factory('Page', function() {
+    var currentView = "";
+    return {
+      title: function() {
+        return "Cuckoo" + (currentView.length > 0 ? (" | " + currentView) : "");
+      },
+      isActiveItem: function (item) {
+        return item === currentView;
+      },
+      setView: function(view) {
+        currentView = view;
+      }
+    };
   });

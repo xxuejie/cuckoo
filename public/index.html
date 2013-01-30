@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en" ng-app="cuckooApp">
+<html lang="en" ng-app="cuckooApp" ng-controller="CuckooPageCtrl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cuckoo</title>
+  <title>{{ page.title() }}</title>
   <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
   <link href="lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
   <link href="css/app.css" rel="stylesheet" media="screen">
@@ -20,13 +20,13 @@
         </a>
         <a class="brand" href="#">Cuckoo</a>
         <ul class="nav">
-          <li class="active">
+          <li ng-class="getNavItemClass('Home')">
             <a href="#/home">Home</a>
           </li>
-          <li class="">
+          <li ng-class="getNavItemClass('Users')">
             <a href="#/users">Users</a>
           </li>
-          <li class="">
+          <li ng-class="getNavItemClass('Me')">
             <a href="#/me">Me</a>
           </li>
         </ul>

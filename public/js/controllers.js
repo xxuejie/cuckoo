@@ -1,7 +1,9 @@
 'use strict';
 
 /* Controllers */
-var CuckooHomeCtrl = ['$scope', '$http', 'TimeUtils', function($scope, $http, TimeUtils) {
+var CuckooHomeCtrl = ['$scope', '$http', 'TimeUtils', 'Page', function($scope, $http, TimeUtils, Page) {
+  Page.setView('Home');
+
   $http.get('api/me.json').success(function(data) {
     $scope.me = data;
   });
@@ -19,7 +21,10 @@ var CuckooHomeCtrl = ['$scope', '$http', 'TimeUtils', function($scope, $http, Ti
   $scope.formatTime = TimeUtils.formatTime;
 }];
 
-var CuckooUserCtrl = ['$scope', '$routeParams', 'User', 'FollowUtils', 'TimeUtils', function($scope, $routeParams, User, FollowUtils, TimeUtils) {
+var CuckooUserCtrl = ['$scope', '$routeParams', 'User',
+                      'FollowUtils', 'TimeUtils', 'Page',
+                      function($scope, $routeParams, User,
+                               FollowUtils, TimeUtils, Page) {
   User.get({userId: $routeParams.id}, function(user) {
     var i;
 
@@ -30,6 +35,8 @@ var CuckooUserCtrl = ['$scope', '$routeParams', 'User', 'FollowUtils', 'TimeUtil
         user.tweets[i].user_name = user.login_name;
       }
     }
+
+    Page.setView(user.login_name);
   });
 
   $scope.followUtils = FollowUtils;
@@ -37,7 +44,10 @@ var CuckooUserCtrl = ['$scope', '$routeParams', 'User', 'FollowUtils', 'TimeUtil
   $scope.formatTime = TimeUtils.formatTime;
 }];
 
-var CuckooUserListCtrl = [ '$scope', '$http', 'FollowUtils', function($scope, $http, FollowUtils) {
+var CuckooUserListCtrl = ['$scope', '$http', 'FollowUtils', 'Page',
+                          function($scope, $http, FollowUtils, Page) {
+  Page.setView("Users");
+
   $http.get('api/users.json').success(function(data) {
     $scope.users = data;
   });
@@ -45,7 +55,9 @@ var CuckooUserListCtrl = [ '$scope', '$http', 'FollowUtils', function($scope, $h
   $scope.followUtils = FollowUtils;
 }];
 
-var CuckooEditCtrl = ['$scope', '$http', function($scope, $http) {
+var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
+  Page.setView("Me");
+
   $http.get('api/me.json').success(function(data) {
     $scope.me = data;
     $scope.origin_avatar = data.avatar;
@@ -55,3 +67,14 @@ var CuckooEditCtrl = ['$scope', '$http', function($scope, $http) {
     console.log("Submitting user: " + JSON.stringify($scope.me));
   }
 }];
+
+// Page controller, changes title and active item in navigation
+// bar according to current view
+var CuckooPageCtrl = function($scope, Page) {
+  $scope.page = Page;
+
+  $scope.getNavItemClass = function(item) {
+    return Page.isActiveItem(item) ? "active" : "";
+  }
+};
+CuckooPageCtrl.$inject = ['$scope', 'Page'];
