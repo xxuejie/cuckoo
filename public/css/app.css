@@ -90,3 +90,12 @@ h1, h2, h3, h4, h5, h6 {
 .tweet-line:active {
   background-color: #eee;
 }
+
+.user-line {
+  padding: 5px 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.user-list div:last-child {
+  border-bottom: none;
+}
