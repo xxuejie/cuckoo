@@ -3,7 +3,7 @@ BASE_DIR = File.expand_path(File.dirname(__FILE__))
 namespace :test do
   task :js_tests => [:js_uint, :js_e2e]
 
-  task :js_uint do |t, args|
+  task :js_unit do |t, args|
     start_testacular(File.join(BASE_DIR, %w[config testacular.conf.js]),
                      args[:misc_options])
   end
