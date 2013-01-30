@@ -1,1 +1,37 @@
-<p>This is the home page!</p>
+<div class="row-fluid home-grid">
+  <div class="span4">
+    <div>
+      <img class="avatar" ng-src="{{me.avatar}}"/>
+      <div class="home-info">
+        <h4>{{me.login_name}}</h4>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td>Tweets</td>
+              <td>Following</td>
+              <td>Followers</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{me.tweet_count}}</td>
+              <td>{{me.following}}</td>
+              <td>{{me.followers}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <textarea class="tweet-box" rows="3" ng-model="newTweet" placeholder="Type your new tweet here..."></textarea>
+      <div>
+        <button class="btn btn-primary" ng-click="submit(newTweet)">Submit</button>
+      </div>
+    </div>
+  </div>
+  <div class="span8">
+      <div class="tweet-line" ng-repeat="tweet in statuses | orderBy:'time':true">
+        <div ng-include src="'includes/tweet.html'"></div>
+      </div>
+  </div>
+</div>

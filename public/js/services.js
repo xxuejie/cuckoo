@@ -25,4 +25,12 @@ angular.module('cuckooApp.services', ['ngResource']).
         return user.followed ? "btn-primary" : "";
       }
     };
+  }).
+  factory('TimeUtils', function() {
+    return {
+      // t is a string value of Date.now()
+      "formatTime": function(t) {
+        return moment(new Date(parseInt(t))).fromNow();
+      }
+    };
   });

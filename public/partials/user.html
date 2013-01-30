@@ -10,9 +10,7 @@
   </div>
 
   <!-- Newest tweet comes first -->
-  <div class="content well" ng-repeat="tweet in user.tweets | orderBy:'time':true">
-    <h4>{{tweet.content}}</h4>
-    <h6 class="tweet-time" ng-bind="formatTime(tweet.time)"></h6>
-    <div class="clear-float"/>
+  <div class="tweet-line" ng-repeat="tweet in user.tweets | orderBy:'time':true">
+    <div ng-include src="'includes/tweet.html'"></div>
   </div>
 </div>
