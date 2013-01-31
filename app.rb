@@ -36,7 +36,12 @@ get '/user/:id' do
   redirect to("/index.html#/user/#{params[:id]}")
 end
 
-post '/api/signin' do
+get '/signout' do
+  session.delete(:user)
+  redirect to('/signin.html')
+end
+
+post '/signin' do
   u = User.authenticate(params[:login_name], params[:password])
   if u
     session[:user] = u
@@ -46,7 +51,7 @@ post '/api/signin' do
   end
 end
 
-post '/api/me' do
+post '/signup' do
   begin
     u = User.create_with_check({login_name: params[:login_name],
                                  password: params[:password],

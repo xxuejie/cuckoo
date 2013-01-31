@@ -103,3 +103,15 @@ h1, h2, h3, h4, h5, h6 {
 .user-list div:last-child {
   border-bottom: none;
 }
+
+.signout-link {
+  color: #999;
+  float: right;
+  padding: 10px 15px 10px;
+}
+
+.signout-link:hover,
+.signout-link:active {
+  color: #fff;
+  text-decoration: none;
+}
