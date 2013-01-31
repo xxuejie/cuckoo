@@ -13,7 +13,7 @@ describe('Cuckoo controllers', function() {
       $httpBackend = _$httpBackend_;
       $httpBackend.expectGET('api/me.json').
         respond({"id": 1, "login_name": "defmacro"});
-      $httpBackend.expectGET('api/statuses.json').
+      $httpBackend.expectGET('api/tweets.json').
         respond([{"content": "test tweet"}]);
       scope = $rootScope.$new();
       homeCtrl = $controller(CuckooHomeCtrl, {$scope: scope});

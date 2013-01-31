@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="span8 tweet-list">
-      <div class="tweet-line" ng-repeat="tweet in statuses | orderBy:'time':true">
+      <div class="tweet-line" ng-repeat="tweet in tweets | orderBy:'time':true">
         <div ng-include src="'includes/tweet.html'"></div>
       </div>
   </div>

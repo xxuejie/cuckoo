@@ -28,7 +28,7 @@ class CuckooApi < Sinatra::Base
     end
   end
 
-  get '/api/statuses.json' do
+  get '/api/tweets.json' do
     check_api_login!
 
     u = session[:user]

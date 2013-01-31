@@ -8,8 +8,8 @@ var CuckooHomeCtrl = ['$scope', '$http', 'TimeUtils', 'Page', function($scope, $
     $scope.me = data;
   });
 
-  $http.get('api/statuses.json').success(function(data) {
-    $scope.statuses = data;
+  $http.get('api/tweets.json').success(function(data) {
+    $scope.tweets = data;
   });
 
   $scope.newTweet = "";
