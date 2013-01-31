@@ -3,7 +3,9 @@ require 'spec_helper'
 describe 'Tweet model' do
   before(:each) do
     Ohm.flush
-    @u = User.create({login_name: "new_user"})
+    @u = User.create({login_name: "new_user",
+                       hashed_password: "pass",
+                       salt: "salt"})
   end
 
   it "should be able to create a new tweet" do
