@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuckoo | Sign In</title>
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+  <link href="css/sign.css" rel="stylesheet" media="screen">
+</head>
+<body>
+  <div class="container">
+    <form class="form-signin-signup form-signin" action="/api/login" method="post">
+      <h2 class="form-signin-signup-heading">Please sign in</h2>
+      <input type="text" class="input-block-level" placeholder="Login name" name="login_name" />
+      <input type="password" class="input-block-level" placeholder="Password" name="password" />
+      <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+      <a class="signup-link" href="/signup.html">Sign Up</a>
+      <div class="alert alert-error" id="error-field"></div>
+    </form>
+  </div>
+  <script src="js/sign.js"></script>
+</body>
+</html>

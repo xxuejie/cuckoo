@@ -1,21 +1,37 @@
 #!/usr/bin/env ruby
 require 'rubygems'
 require 'sinatra'
+require 'rack/protection'
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "lib"))
+use Rack::Protection
+
+LIB_PATH = File.join(File.dirname(__FILE__), "lib")
+$LOAD_PATH.unshift(LIB_PATH)
+
+Dir["#{LIB_PATH}/helpers/*.rb"].each {|f| require f}
+Dir["#{LIB_PATH}/models/*.rb"].each {|f| require f}
+Dir["#{LIB_PATH}/routes/*.rb"].each {|f| require f}
+
+enable :sessions
+
+include Helpers::LoginHelpers
 
 get '/' do
+  check_login!
   redirect to('/index.html#/home')
 end
 
 get '/me' do
+  check_login!
   redirect to('/index.html#/me')
 end
 
 get '/users' do
+  check_login!
   redirect to('/index.html#/users')
 end
 
 get '/user/:id' do
+  check_login!
   redirect to("/index.html#/user/#{params[:id]}")
 end

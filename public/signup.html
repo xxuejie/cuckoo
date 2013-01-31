@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuckoo | Sign Up</title>
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+  <link href="css/sign.css" rel="stylesheet" media="screen">
+</head>
+<body>
+  <div class="container">
+    <form class="form-signin-signup form-signup" action="/api/me" method="post">
+      <h2 class="form-signin-signup-heading">Please fill in your information:</h2>
+      <label>Your login name?</label>
+      <input type="text" class="input-block-level" placeholder="Login name" name="login_name" />
+      <label>And your password?</label>
+      <input type="password" class="input-block-level" placeholder="Password" name="password" />
+      <label>You can enter your email address here, we will use your gravatar here. If you don't trust us, feel free to enter the gravatar URL for your avatar directly, or enter URL from another site.</label>
+      <input type="text" class="input-block-level" placeholder="Avatar" name="avatar" />
+      <label>Would you mind write a little description of you?</label>
+      <textarea rows="3" class="input-block-level" placeholder="Description" name="description"></textarea>
+      <button class="btn btn-large btn-primary" type="submit">Sign up</button>
+      <div class="alert alert-error" id="error-field"></div>
+    </form>
+  </div>
+  <script src="js/sign.js"></script>
+</body>
+</html>

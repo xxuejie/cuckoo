@@ -16,4 +16,13 @@ module Helpers
     # to PBKDF2 later
     Digest::SHA1.hexdigest(password + salt)
   end
+
+  module LoginHelpers
+    # Check if the user is currently logged in, and if not, redirect to login page
+    def check_login!
+      unless session['user']
+        redirect to('/signin.html')
+      end
+    end
+  end
 end
