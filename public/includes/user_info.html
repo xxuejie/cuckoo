@@ -1,7 +1,7 @@
 <!-- User info template, reference the user by "user" -->
 <img class="avatar" ng-src="{{user.avatar}}"/>
 <div class="user-info">
-  <button class="btn btn-follow" ng-click="followUtils.toggleFollow(user)" ng-bind="followUtils.getFollowText(user)" ng-class="followUtils.getFollowClass(user)" ng-hide="user.self"></button>
+  <button class="btn btn-follow" ng-click="followUtils.toggleFollow(user)" ng-bind="followUtils.getFollowText(user)" ng-class="followUtils.getFollowClass(user)" ng-hide="user.myself"></button>
   <h3><a ng-href="/user/{{user.id}}">{{user.login_name}}</a></h3>
   <p>
     {{user.description}}

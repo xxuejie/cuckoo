@@ -54,4 +54,24 @@ class CuckooApi < Sinatra::Base
       Helpers::result_error("Content is required!")
     end
   end
+
+  get '/api/users.json' do
+    check_api_login!
+
+    myself = session[:user]
+    result = []
+
+    User.all.each do |u|
+      result << {
+        id: u.id,
+        login_name: u.login_name,
+        avatar: u.avatar,
+        description: u.description,
+        followed: myself.followers.member?(u),
+        myself: u.id == myself.id
+      }
+    end
+
+    result.to_json
+  end
 end
