@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-require 'models/user'
-require 'models/tweet'
-
 describe "User model" do
   before(:each) do
     Ohm.flush
