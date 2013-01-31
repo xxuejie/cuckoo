@@ -1,5 +1,10 @@
 BASE_DIR = File.expand_path(File.dirname(__FILE__))
 
+desc "start a pry console"
+task :console do |t|
+  sh "bundle exec pry -r ./app.rb"
+end
+
 namespace :test do
   task :all => [:rspec, :js_unit, :js_e2e]
 
