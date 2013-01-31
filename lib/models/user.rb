@@ -34,4 +34,20 @@ class User < Ohm::Model
       u.hashed_password
     nil
   end
+
+  def self.create_with_check(atts)
+    raise ArgumentError, "Password cannot be empty!" unless atts[:password]
+    atts[:salt] = Helpers::generate_salt
+    atts[:hashed_password] = Helpers::encrypt_password(atts[:password],
+                                                       atts[:salt])
+    atts.delete(:password)
+    atts[:avatar] = Helpers::normalize_avatar_url(atts[:avatar])
+
+    begin
+      u = User.create(atts)
+      raise ArgumentError, "Login name cannot be empty!" if u.nil?
+    rescue Ohm::UniqueIndexViolation
+      raise ArgumentError, "Your login name #{atts[:login_name]} already exists!"
+    end
+  end
 end

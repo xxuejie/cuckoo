@@ -35,3 +35,26 @@ get '/user/:id' do
   check_login!
   redirect to("/index.html#/user/#{params[:id]}")
 end
+
+post '/api/signin' do
+  u = User.authenticate(params[:login_name], params[:password])
+  if u
+    session[:user] = u
+    redirect to('/')
+  else
+    redirect to("/signin.html?error=#{Helpers::encode_uri("Login name or password is incorrect!")}")
+  end
+end
+
+post '/api/me' do
+  begin
+    u = User.create_with_check({login_name: params[:login_name],
+                                 password: params[:password],
+                                 avatar: params[:avatar],
+                                 description: params[:description]})
+    session[:user] = u
+    redirect to ('/')
+  rescue ArgumentError => e
+    redirect to("/signup.html?error=#{Helpers::encode_uri(e.message)}")
+  end
+end

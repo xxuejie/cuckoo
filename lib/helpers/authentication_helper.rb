@@ -20,7 +20,7 @@ module Helpers
   module LoginHelpers
     # Check if the user is currently logged in, and if not, redirect to login page
     def check_login!
-      unless session['user']
+      unless session[:user]
         redirect to('/signin.html')
       end
     end
