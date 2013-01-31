@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe "authentication helper" do
+  include Helpers::Authentication
+
   it "should generate a non-empty salt" do
-    salt = Helpers::generate_salt
+    salt = generate_salt
 
     expect(salt).to_not be_nil
     expect(salt.length).to_not be(0)
@@ -11,7 +13,7 @@ describe "authentication helper" do
   it "should encrpy a password, the original password should not be in the encrypted one" do
     pass = "pass"
     salt = "salt"
-    hashed_password = Helpers::encrypt_password(pass, salt)
+    hashed_password = encrypt_password(pass, salt)
 
     expect(hashed_password).to_not be_nil
     expect(hashed_password.length).to_not be(0)

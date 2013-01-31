@@ -55,12 +55,12 @@ describe "User model" do
 
       # monkey patch encrypt_password here
       module Helpers
-        class << self
+        module Authentication
           alias_method :origin_encrypt, :encrypt_password
-        end
 
-        def self.encrypt_password(pass, salt)
-          pass + salt
+          def encrypt_password(pass, salt)
+            pass + salt
+          end
         end
       end
     end
@@ -68,7 +68,7 @@ describe "User model" do
     after(:each) do
       # Restore monkey patched function
       module Helpers
-        class << self
+        module Authentication
           alias_method :encrypt_password, :origin_encrypt
           remove_method :origin_encrypt
         end

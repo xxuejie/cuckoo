@@ -14,7 +14,7 @@ Dir["#{LIB_PATH}/routes/*.rb"].each {|f| require f}
 
 enable :sessions
 
-include Helpers::LoginHelpers
+include Helpers::Login
 
 use CuckooServer
 use CuckooApi
