@@ -1,7 +1,8 @@
 'use strict';
 
 /* Controllers */
-var CuckooHomeCtrl = ['$scope', '$http', 'TimeUtils', 'Page', function($scope, $http, TimeUtils, Page) {
+
+var CuckooHomeCtrl = ['$scope', '$http', '$filter', 'TimeUtils', 'Page', function($scope, $http, $filter, TimeUtils, Page) {
   Page.setView('Home');
 
   $http.get('api/me.json').success(function(data) {
@@ -15,7 +16,19 @@ var CuckooHomeCtrl = ['$scope', '$http', 'TimeUtils', 'Page', function($scope, $
   $scope.newTweet = "";
 
   $scope.submit = function(newTweet) {
-    console.log("Post new tweet: " + newTweet);
+    $http.post('api/tweets.json',
+               {content: $scope.newTweet},
+               {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
+      success(
+        function(data) {
+          if (data.status === 'ok') {
+            $scope.tweets.unshift(data.data);
+            console.log($scope.tweets);
+            $scope.newTweet = "";
+          } else if (data.status === 'error') {
+            console.log(data.error);
+          }
+        });
   }
 
   $scope.formatTime = TimeUtils.formatTime;
