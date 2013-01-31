@@ -39,7 +39,7 @@ class CuckooApi < Sinatra::Base
     check_api_login!
 
     user = session[:user]
-    content = json_request['content']
+    content = json_request!['content']
 
     if content
       tweet = Tweet.create({content: content,
@@ -73,5 +73,31 @@ class CuckooApi < Sinatra::Base
     end
 
     result.to_json
+  end
+
+  post '/api/follow.json' do
+    check_api_login!
+
+    myself = session[:user]
+    request = json_request!
+
+    follower_id = request['id']
+    should_follow = request['follow']
+
+    if follower_id.nil? || should_follow.nil?
+      return result_error("Missing arguments!")
+    end
+
+    follower = User[follower_id]
+    if follower
+      if should_follow
+        myself.followers.add(follower)
+      else
+        myself.followers.delete(follower)
+      end
+      result_ok({followed: should_follow})
+    else
+      result_error("Cannot find user #{follower_id}!")
+    end
   end
 end

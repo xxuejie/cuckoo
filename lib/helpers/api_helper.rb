@@ -21,7 +21,7 @@ module Helpers
       {status: "error", error: error}.to_json
     end
 
-    def json_request
+    def json_request!
       request.body.rewind
       JSON.parse(request.body.read)
     end

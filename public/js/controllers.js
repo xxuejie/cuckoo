@@ -23,7 +23,6 @@ var CuckooHomeCtrl = ['$scope', '$http', '$filter', 'TimeUtils', 'Page', functio
         function(data) {
           if (data.status === 'ok') {
             $scope.tweets.unshift(data.data);
-            console.log($scope.tweets);
             $scope.newTweet = "";
           } else if (data.status === 'error') {
             console.log(data.error);

@@ -10,13 +10,22 @@ angular.module('cuckooApp.services', ['ngResource']).
   factory('User', function($resource) {
     return $resource('api/user/:userId.json', {}, {});
   }).
-  factory('FollowUtils', function() {
+  factory('FollowUtils', function($http) {
     return {
       "toggleFollow": function(user) {
-        // implement a http request call here
-        console.log("Toogle follow status for user: " + user.login_name);
-
-        user.followed = !user.followed;
+        var new_follow_state = !user.followed;
+        $http.post('api/follow.json',
+                   {id: user.id,
+                    follow: new_follow_state},
+                   {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
+          success(function(data) {
+            if (data.status === 'ok') {
+              user.followed = data.data.followed;
+              console.log(user);
+            } else if (data.status === 'error') {
+              console.log(data.error);
+            }
+          });
       },
       "getFollowText": function(user) {
         return user.followed ? "Followed" : "Follow";
