@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe "User model" do
   before(:each) do

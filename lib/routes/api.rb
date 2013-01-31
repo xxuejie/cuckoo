@@ -16,4 +16,11 @@ class CuckooApi < Sinatra::Base
       following: u.following.size
     }.to_json
   end
+
+  get '/api/statuses.json' do
+    check_api_login!
+
+    u = session[:user]
+    
+  end
 end
