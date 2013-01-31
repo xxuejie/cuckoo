@@ -1,7 +1,7 @@
 BASE_DIR = File.expand_path(File.dirname(__FILE__))
 
 namespace :test do
-  task :js_tests => [:js_uint, :js_e2e]
+  task :all => [:rspec, :js_unit, :js_e2e]
 
   task :js_unit do |t, args|
     start_testacular(File.join(BASE_DIR, %w[config testacular.conf.js]),
@@ -11,6 +11,10 @@ namespace :test do
   task :js_e2e do |t, args|
     start_testacular(File.join(BASE_DIR, %w[config testacular-e2e.conf.js]),
                      args[:misc_options])
+  end
+
+  task :rspec do |t|
+    sh "rspec"
   end
 end
 
