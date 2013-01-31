@@ -5,4 +5,10 @@ class Tweet < Ohm::Model
 
   attribute :content
   attribute :time
+
+  def validate
+    assert_present :content
+    assert_present :time
+    assert_present :user
+  end
 end
