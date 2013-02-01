@@ -1,16 +1,30 @@
 module Helpers
   module Login
+    def check_and_get_user
+      if session[:user]
+        u = User[session[:user]]
+        if u
+          return u
+        else
+          # invalid session
+          session.delete(:user)
+          return nil
+        end
+      end
+      nil
+    end
+
     # Check if the user is currently logged in, and if not, redirect to login page
     def check_login!
-      redirect to('/signin.html') unless session[:user]
-
-      User[session[:user]]
+      u = check_and_get_user
+      redirect to('/signin.html') unless u
+      u
     end
 
     def check_api_login!
-      halt 403 unless session[:user]
-
-      User[session[:user]]
+      u = check_and_get_user
+      halt 403 unless u
+      u
     end
 
     def set_session_user!(user)
