@@ -91,13 +91,24 @@ var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
   $http.get('api/me.json').success(function(data) {
     $scope.me = data;
     $scope.origin_avatar = data.avatar;
+
+    $scope.password = $scope.password_again = "";
   })
 
   $scope.submit = function() {
-    $http.post('api/me.json',
-               {login_name: $scope.me.login_name,
-                avatar: $scope.me.avatar,
-                description: $scope.me.description},
+    var changes = {login_name: $scope.me.login_name,
+               avatar: $scope.me.avatar,
+               description: $scope.me.description};
+
+    if ($scope.password || $scope.password_again) {
+      if ($scope.password !== $scope.password_again) {
+        Page.setError("Password does not match!");
+        return;
+      }
+      changes.password = $scope.password;
+    }
+
+    $http.post('api/me.json', changes,
                {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
       success(function(data) {
         if (data.status === 'ok') {

@@ -57,6 +57,15 @@ class User < Ohm::Model
 
   def update_with_check(atts)
     atts[:avatar] = User.normalize_avatar_url(atts[:avatar])
+    if atts[:password] || atts[:salt]
+      new_pass = atts[:password] || password
+      new_salt = atts[:salt] || salt
+
+      atts[:hashed_password] = User.encrypt_password(new_pass, new_salt)
+      atts[:salt] = new_salt
+      atts.delete(:password)
+    end
+
     begin
       u = update(atts)
       raise ArgumentError, "Arguments are not valid!" if u.nil?
