@@ -36,6 +36,7 @@
   </div>
 
   <div class="container">
+    <div class="alert" ng-class="page.alertClass()" ng-bind="page.alert()" ng-show="page.alert()"></div>
     <div ng-view></div>
   </div>
 

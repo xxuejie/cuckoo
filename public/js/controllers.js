@@ -26,7 +26,7 @@ var CuckooHomeCtrl = ['$scope', '$http', '$filter', 'TimeUtils', 'Page', functio
             $scope.me.tweet_count++;
             $scope.newTweet = "";
           } else if (data.status === 'error') {
-            console.log(data.error);
+            Page.setError(data.error);
           }
         });
   }
@@ -52,7 +52,7 @@ var CuckooUserCtrl = ['$scope', '$routeParams', 'User',
 
       Page.setView(user.login_name);
     } else if (data.status === 'error') {
-      console.log(data.error);
+      Page.setError(data.error);
     }
   });
 
@@ -90,9 +90,9 @@ var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
         if (data.status === 'ok') {
           $scope.me = data.data;
           $scope.origin_avatar = data.data.avatar;
-          console.log("Update succeeded!");
+          Page.setSuccess("Update succeeded!");
         } else if (data.status === 'error') {
-          console.log(data.error);
+          Page.setError(data.error);
         }
       });
   }

@@ -10,7 +10,7 @@ angular.module('cuckooApp.services', ['ngResource']).
   factory('User', function($resource) {
     return $resource('api/user/:name.json', {}, {});
   }).
-  factory('FollowUtils', function($http) {
+  factory('FollowUtils', function($http, Page) {
     return {
       "toggleFollow": function(user) {
         if (!user) {
@@ -25,7 +25,7 @@ angular.module('cuckooApp.services', ['ngResource']).
             if (data.status === 'ok') {
               user.followed = data.data.followed;
             } else if (data.status === 'error') {
-              console.log(data.error);
+              Page.setError(data.error);
             }
           });
       },
@@ -47,6 +47,9 @@ angular.module('cuckooApp.services', ['ngResource']).
   }).
   factory('Page', function() {
     var currentView = "";
+    var alertText = "";
+    var alertError = false;
+
     return {
       title: function() {
         return "Cuckoo" + (currentView.length > 0 ? (" | " + currentView) : "");
@@ -56,6 +59,20 @@ angular.module('cuckooApp.services', ['ngResource']).
       },
       setView: function(view) {
         currentView = view;
+      },
+      alert: function() {
+        return alertText;
+      },
+      alertClass: function() {
+        return alertError ? "alert-error" : "alert-success";
+      },
+      setError: function(errorText) {
+        alertText = errorText;
+        alertError = true;
+      },
+      setSuccess: function(successText) {
+        alertText = successText;
+        alertError = false;
       }
     };
   });

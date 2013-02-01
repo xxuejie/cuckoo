@@ -90,7 +90,7 @@ class CuckooApi < Sinatra::Base
                 avatar: u.avatar,
                 description: u.description,
                 followed: myself.followers.member?(u),
-                self: u.id == myself.id,
+                myself: u.id == myself.id,
                 tweets: tweets})
     else
       result_error("User #{params[:name]} does not exist!}")
@@ -107,6 +107,10 @@ class CuckooApi < Sinatra::Base
 
     if follower_id.nil? || should_follow.nil?
       return result_error("Missing arguments!")
+    end
+
+    if follower_id == myself.id
+      return result_error("You cannot follow yourself!")
     end
 
     follower = User[follower_id]
