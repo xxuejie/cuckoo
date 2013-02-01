@@ -3,6 +3,9 @@ require 'rubygems'
 require 'sinatra'
 require 'rack/protection'
 
+# Use RedisToGo on Heroku
+ENV['REDIS_URL'] = ENV['REDISTOGO_URL'] || ENV['REDIS_URL'] || 'redis://localhost:6379'
+
 use Rack::Protection
 
 LIB_PATH = File.join(File.dirname(__FILE__), "lib")
