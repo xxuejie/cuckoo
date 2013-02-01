@@ -49,6 +49,7 @@ class User < Ohm::Model
     begin
       u = User.create(atts)
       raise ArgumentError, "Login name cannot be empty!" if u.nil?
+      u
     rescue Ohm::UniqueIndexViolation
       raise ArgumentError, "Your login name #{atts[:login_name]} already exists!"
     end
