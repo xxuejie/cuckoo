@@ -23,6 +23,7 @@ angular.module('cuckooApp.services', ['ngResource']).
       return response;
     }
     function error(response) {
+      Page.setLoading(false);
       if (response.status === 403) {
         // login error, redirect to signin page directly
         $location.path("/signin");
@@ -71,6 +72,7 @@ angular.module('cuckooApp.services', ['ngResource']).
     var currentView = "";
     var alertText = "";
     var alertError = false;
+    var isLoading = true;
 
     return {
       title: function() {
@@ -95,6 +97,12 @@ angular.module('cuckooApp.services', ['ngResource']).
       setSuccess: function(successText) {
         alertText = successText;
         alertError = false;
+      },
+      loading: function() {
+        return isLoading;
+      },
+      setLoading: function(newLoading) {
+        isLoading = newLoading;
       }
     };
   });

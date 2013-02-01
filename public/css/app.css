@@ -159,3 +159,22 @@ h1, h2, h3, h4, h5, h6 {
   float: right;
   margin-top: 15px;
 }
+
+.loading-spinner {
+  position: fixed;
+  left: 50%;
+  top: 0;
+  z-index: 2000;
+  width: 100px;
+  margin-left: -50px;
+  display: inline-block;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  background: #fff1a8;
+  border-color: #fff1a8;
+  color: #222;
+  text-align: center;
+  font-weight: bold;
+}

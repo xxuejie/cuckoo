@@ -3,14 +3,32 @@
 /* Controllers */
 
 var CuckooHomeCtrl = ['$scope', '$http', '$filter', 'TimeUtils', 'Page', function($scope, $http, $filter, TimeUtils, Page) {
+  var loadingMe = true, loadingTweets = true;
+
+  function checkLoading() {
+    // When network error happens, the loading flag is already removed in
+    // http inteceptor
+    if (!Page.loading()) {
+      return;
+    }
+
+    Page.setLoading(loadingMe || loadingTweets);
+  }
+
   Page.setView('Home');
 
   $http.get('api/me.json').success(function(data) {
     $scope.me = data;
+
+    loadingMe = false;
+    checkLoading();
   });
 
   $http.get('api/tweets.json').success(function(data) {
     $scope.tweets = data;
+
+    loadingTweets = false;
+    checkLoading();
   });
 
   $scope.newTweet = "";
@@ -49,6 +67,8 @@ var CuckooUserCtrl = ['$scope', '$routeParams', '$http',
                       function($scope, $routeParams, $http,
                                FollowUtils, TimeUtils, Page) {
   $http.get('api/user/' + $routeParams.name + '.json').success(function(data) {
+    Page.setLoading(false);
+
     if (data) {
       var i;
 
@@ -74,6 +94,8 @@ var CuckooUserListCtrl = ['$scope', '$http', 'FollowUtils', 'Page',
   Page.setView("Users");
 
   $http.get('api/users.json').success(function(data) {
+    Page.setLoading(false);
+
     $scope.users = data;
   });
 
@@ -84,6 +106,8 @@ var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
   Page.setView("Me");
 
   $http.get('api/me.json').success(function(data) {
+    Page.setLoading(false);
+
     $scope.me = data;
     $scope.origin_avatar = data.avatar;
 
@@ -116,6 +140,9 @@ var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
 
 var CuckooSigninCtrl = ['$scope', '$http', '$location', 'Page',
                         function($scope, $http, $location, Page) {
+  Page.setView('Signin');
+  Page.setLoading(false);
+
   $scope.submit = function() {
     if (!($scope.login_name && $scope.password)) {
       Page.setError("Login name/Password cannot be empty!");
@@ -133,6 +160,9 @@ var CuckooSigninCtrl = ['$scope', '$http', '$location', 'Page',
 
 var CuckooSignupCtrl = ['$scope', '$http', '$location', 'Page',
                         function($scope, $http, $location, Page) {
+  Page.setView('Signup');
+  Page.setLoading(false);
+
   $scope.submit = function() {
     if (!($scope.login_name && $scope.password)) {
       Page.setError("Login name/Password cannot be empty!");
@@ -157,6 +187,7 @@ var CuckooPageCtrl = function($scope, Page, $http, $location) {
   $scope.page = Page;
   $scope.$on('$routeChangeSuccess', function(scope, next, current) {
     Page.setError("");
+    Page.setLoading(true);
   });
 
   $scope.getNavItemClass = function(item) {
