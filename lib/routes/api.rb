@@ -7,7 +7,7 @@ class CuckooApi < Sinatra::Base
   get '/api/me.json' do
     myself = check_api_login!
 
-    get_json_user_hash(myself).to_json
+    result_ok(get_json_user_hash(myself))
   end
 
   # Update personal information
@@ -34,7 +34,7 @@ class CuckooApi < Sinatra::Base
       add_tweets_to_result(follower, result)
     end
 
-    result.to_json
+    result_ok(result)
   end
 
   # Post a new tweet
@@ -72,7 +72,7 @@ class CuckooApi < Sinatra::Base
       }
     end
 
-    result.to_json
+    result_ok(result)
   end
 
   get '/api/user/:name.json' do

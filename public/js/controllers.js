@@ -21,12 +21,10 @@ var CuckooHomeCtrl = ['$scope', '$http', '$filter', 'TimeUtils', 'Page', functio
                {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
       success(
         function(data) {
-          if (data.status === 'ok') {
-            $scope.tweets.unshift(data.data);
+          if (data) {
+            $scope.tweets.unshift(data);
             $scope.me.tweet_count++;
             $scope.newTweet = "";
-          } else if (data.status === 'error') {
-            Page.setError(data.error);
           }
         });
   }
@@ -52,10 +50,10 @@ var CuckooUserCtrl = ['$scope', '$routeParams', 'User',
                       function($scope, $routeParams, User,
                                FollowUtils, TimeUtils, Page) {
   User.get({name: $routeParams.name}, function(data) {
-    if (data.status === 'ok') {
+    if (data) {
       var i;
 
-      var user = $scope.user = data.data;
+      var user = $scope.user = data;
       if (user.tweets) {
         for (i = 0; i < user.tweets.length; i++) {
           user.tweets[i].user_id = user.id;
@@ -64,8 +62,6 @@ var CuckooUserCtrl = ['$scope', '$routeParams', 'User',
       }
 
       Page.setView(user.login_name);
-    } else if (data.status === 'error') {
-      Page.setError(data.error);
     }
   });
 
@@ -111,12 +107,10 @@ var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
     $http.post('api/me.json', changes,
                {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
       success(function(data) {
-        if (data.status === 'ok') {
+        if (data) {
           $scope.me = data.data;
           $scope.origin_avatar = data.data.avatar;
           Page.setSuccess("Update succeeded!");
-        } else if (data.status === 'error') {
-          Page.setError(data.error);
         }
       });
   }
@@ -126,6 +120,9 @@ var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
 // bar according to current view
 var CuckooPageCtrl = function($scope, Page) {
   $scope.page = Page;
+  $scope.$on('$routeChangeSuccess', function(scope, next, current) {
+    Page.setError("");
+  });
 
   $scope.getNavItemClass = function(item) {
     return Page.isActiveItem(item) ? "active" : "";

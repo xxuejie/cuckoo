@@ -7,10 +7,36 @@
 // In this case it is a simple value service.
 angular.module('cuckooApp.services', ['ngResource']).
   value('version', '0.1').
+  config(function ($httpProvider) {
+    $httpProvider.responseInterceptors.push('cuckooApiInterceptor');
+  }).
+  factory('cuckooApiInterceptor', function($q, Page, $location) {
+    function success(response) {
+      if (response.data.status === 'ok') {
+        response.data = response.data.data;
+      } else if (response.data.status === 'error') {
+        Page.setError(response.data.error);
+        response.data = undefined;
+      }
+      return response;
+    }
+    function error(response) {
+      if (response.status === 403) {
+        // login error, redirect to signin page directly
+        window.location = "/signin.html";
+      } else {
+        Page.setError("Network error occurs! Status code: " + response.status);
+      }
+      return $q.reject(response);
+    }
+    return function(promise) {
+      return promise.then(success, error);
+    }
+  }).
   factory('User', function($resource) {
     return $resource('api/user/:name.json', {}, {});
   }).
-  factory('FollowUtils', function($http, Page) {
+  factory('FollowUtils', function($http) {
     return {
       "toggleFollow": function(user) {
         if (!user) {
@@ -22,10 +48,8 @@ angular.module('cuckooApp.services', ['ngResource']).
                     follow: new_follow_state},
                    {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
           success(function(data) {
-            if (data.status === 'ok') {
+            if (data) {
               user.followed = data.data.followed;
-            } else if (data.status === 'error') {
-              Page.setError(data.error);
             }
           });
       },
@@ -52,7 +76,7 @@ angular.module('cuckooApp.services', ['ngResource']).
 
     return {
       title: function() {
-        return "Cuckoo" + (currentView.length > 0 ? (" | " + currentView) : "");
+        return "Cuckoo" + ((currentView && (currentView.length > 0)) ? (" | " + currentView) : "");
       },
       isActiveItem: function (item) {
         return item === currentView;
