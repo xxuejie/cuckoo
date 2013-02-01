@@ -16,6 +16,7 @@ Dir["#{LIB_PATH}/models/*.rb"].each {|f| require f}
 Dir["#{LIB_PATH}/routes/*.rb"].each {|f| require f}
 
 enable :sessions
+set :session_secret, ENV['SESSION_KEY'] || "Thisisaverylongsessionsecretfortesting"
 
 include Helpers::Login
 
