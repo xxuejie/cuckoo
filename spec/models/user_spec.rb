@@ -42,7 +42,7 @@ describe "User model" do
     expect(User.create({login_name: "aname", hashed_password: "pass"})).to be_nil
   end
 
-  describe "login feature" do
+  describe "authentication tests" do
     before(:each) do
       @login_name = "aname"
       @pass = "pass"
@@ -85,6 +85,45 @@ describe "User model" do
 
     it "should not be able to login with login name that does not exist" do
       expect(User.authenticate(@not_exist_login_name, @pass)).to be_nil
+    end
+
+    it "should raise error when creating a new one without login name" do
+      lambda {
+        User.create_with_check({password: @pass})
+      }.should raise_error(ArgumentError)
+    end
+
+    it "should raise error when creating a new user without password" do
+      lambda {
+        User.create_with_check({login_name: @not_exist_login_name})
+      }.should raise_error(ArgumentError)
+    end
+
+    it "should raise error when creating a user with same name" do
+      lambda {
+        User.create_with_check({login_name: @login_name, password: @pass})
+      }.should raise_error(ArgumentError)
+    end
+
+    it "should not be able to update user with same name" do
+      u = User.create({login_name: @not_exist_login_name,
+                        hashed_password: @pass + @salt,
+                        salt: @salt})
+      lambda {
+        u.update_with_check({login_name: @login_name})
+      }.should raise_error(ArgumentError)
+    end
+
+    it "should be able to update user information" do
+      u = User.find({login_name: @login_name}).first
+      u.update_with_check({login_name: @not_exist_login_name,
+                            password: @wrong_pass})
+
+      expect(User.find({login_name: @login_name}).size).to be(0)
+      u = User.find({login_name: @not_exist_login_name}).first
+
+      expect(u.login_name).to eq(@not_exist_login_name)
+      expect(u.hashed_password).to eq(@wrong_pass + @salt)
     end
   end
 end

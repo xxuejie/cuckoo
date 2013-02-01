@@ -11,8 +11,10 @@ group :test do
   gem "rspec"
   gem "rack-test"
   gem "pry"
+  gem "pry-debugger"
 end
 
 group :development do
   gem "pry"
+  gem "pry-debugger"
 end
