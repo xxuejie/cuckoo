@@ -3,6 +3,8 @@ require 'ohm'
 
 require 'helpers/authentication_helper'
 
+require 'pry'
+
 class User < Ohm::Model
   attribute :login_name
   index :login_name
@@ -49,6 +51,18 @@ class User < Ohm::Model
     begin
       u = User.create(atts)
       raise ArgumentError, "Login name cannot be empty!" if u.nil?
+    rescue Ohm::UniqueIndexViolation
+      raise ArgumentError, "Your login name #{atts[:login_name]} already exists!"
+    end
+  end
+
+  def update_with_check(atts)
+    atts[:avatar] = User.normalize_avatar_url(atts[:avatar])
+    begin
+      u = update(atts)
+      raise ArgumentError, "Arguments are not valid!" if u.nil?
+
+      u.save
     rescue Ohm::UniqueIndexViolation
       raise ArgumentError, "Your login name #{atts[:login_name]} already exists!"
     end

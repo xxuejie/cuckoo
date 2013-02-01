@@ -31,14 +31,14 @@ describe('Cuckoo controllers', function() {
 
     beforeEach(inject(function($controller, $rootScope, _$httpBackend_) {
       scope = $rootScope.$new();
-      routeParams = {"id": 1};
+      routeParams = {"name": "aaa"};
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('api/user/1.json').
-        respond({"id": 1,
-                 "login_name": "aaa",
-                 "tweets": [
-                   {"content": "test_content"}
-                 ]});
+      $httpBackend.expectGET('api/user/aaa.json').
+        respond({"status": "ok", "data": {"id": 1,
+                                          "login_name": "aaa",
+                                          "tweets": [
+                                            {"content": "test_content"}
+                                          ]}});
       userCtrl = $controller(CuckooUserCtrl, {$scope: scope,
                                               $routeParams: routeParams});
     }));

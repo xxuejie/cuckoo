@@ -2,6 +2,8 @@ require 'sinatra/base'
 
 # Module for doing basic redirects and sign in/up/out requests
 class CuckooServer < Sinatra::Base
+  include Helpers::Url
+
   get '/' do
     check_login!
     redirect to('/index.html#/home')
@@ -23,17 +25,17 @@ class CuckooServer < Sinatra::Base
   end
 
   get '/signout' do
-    session.delete(:user)
+    set_session_user! nil
     redirect to('/signin.html')
   end
 
   post '/signin' do
     u = User.authenticate(params[:login_name], params[:password])
     if u
-      session[:user] = u
+      set_session_user! u
       redirect to('/')
     else
-      redirect to("/signin.html?error=#{Helpers::encode_uri("Login name or password is incorrect!")}")
+      redirect to("/signin.html?error=#{encode_uri("Login name or password is incorrect!")}")
     end
   end
 
@@ -43,10 +45,10 @@ class CuckooServer < Sinatra::Base
                                    password: params[:password],
                                    avatar: params[:avatar],
                                    description: params[:description]})
-      session[:user] = u
+      set_session_user! u
       redirect to ('/')
     rescue ArgumentError => e
-      redirect to("/signup.html?error=#{Helpers::encode_uri(e.message)}")
+      redirect to("/signup.html?error=#{encode_uri(e.message)}")
     end
   end
 end

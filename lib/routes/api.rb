@@ -7,24 +7,28 @@ class CuckooApi < Sinatra::Base
   include Helpers::Api
 
   get '/api/me.json' do
-    check_api_login!
+    myself = check_api_login!
 
-    u = session[:user]
-    {
-      id: u.id,
-      login_name: u.login_name,
-      avatar: u.avatar,
-      description: u.description,
-      tweet_count: u.tweets.size,
-      followers: u.followers.size,
-      following: u.following.size
-    }.to_json
+    get_json_user_hash(myself).to_json
+  end
+
+  # Update personal information
+  post '/api/me.json' do
+    myself = check_api_login!
+
+    begin
+      myself = myself.update_with_check(json_request!)
+      set_session_user!(myself)
+
+      result_ok(get_json_user_hash(myself))
+    rescue ArgumentError => e
+      result_error(e.message)
+    end
   end
 
   get '/api/tweets.json' do
-    check_api_login!
+    u = check_api_login!
 
-    u = session[:user]
     result = []
 
     add_tweets_to_result(u, result)
@@ -35,16 +39,16 @@ class CuckooApi < Sinatra::Base
     result.to_json
   end
 
+  # Post a new tweet
   post '/api/tweets.json' do
-    check_api_login!
+    user = check_api_login!
 
-    user = session[:user]
-    content = json_request!['content']
+    content = json_request![:content]
 
     if content
       tweet = Tweet.create({content: content,
                              # Time is in milliseconds
-                             time: Time.now.to_i * 1000,
+                             time: "#{Time.now.to_i * 1000}",
                              user: user})
       result_ok({content: tweet.content,
                            time: tweet.time,
@@ -56,9 +60,8 @@ class CuckooApi < Sinatra::Base
   end
 
   get '/api/users.json' do
-    check_api_login!
+    myself = check_api_login!
 
-    myself = session[:user]
     result = []
 
     User.all.each do |u|
@@ -76,9 +79,8 @@ class CuckooApi < Sinatra::Base
   end
 
   get '/api/user/:name.json' do
-    check_api_login!
+    myself = check_api_login!
 
-    myself = session[:user]
     u = User.find({login_name: params[:name]}).first
     if u
       tweets = []
@@ -98,13 +100,12 @@ class CuckooApi < Sinatra::Base
   end
 
   post '/api/follow.json' do
-    check_api_login!
+    myself = check_api_login!
 
-    myself = session[:user]
     request = json_request!
 
-    follower_id = request['id']
-    should_follow = request['follow']
+    follower_id = request[:id]
+    should_follow = request[:follow]
 
     if follower_id.nil? || should_follow.nil?
       return result_error("Missing arguments!")

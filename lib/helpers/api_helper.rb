@@ -23,7 +23,19 @@ module Helpers
 
     def json_request!
       request.body.rewind
-      JSON.parse(request.body.read)
+      JSON.parse(request.body.read, symbolize_names: true)
+    end
+
+    def get_json_user_hash(u)
+      {
+        id: u.id,
+        login_name: u.login_name,
+        avatar: u.avatar,
+        description: u.description,
+        tweet_count: u.tweets.size,
+        followers: u.followers.size,
+        following: u.following.size
+      }
     end
   end
 end

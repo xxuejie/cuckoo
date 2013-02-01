@@ -80,7 +80,20 @@ var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
   })
 
   $scope.submit = function() {
-    console.log("Submitting user: " + JSON.stringify($scope.me));
+    $http.post('api/me.json',
+               {login_name: $scope.me.login_name,
+                avatar: $scope.me.avatar,
+                description: $scope.me.description},
+               {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
+      success(function(data) {
+        if (data.status === 'ok') {
+          $scope.me = data.data;
+          $scope.origin_avatar = data.data.avatar;
+          console.log("Update succeeded!");
+        } else if (data.status === 'error') {
+          console.log(data.error);
+        }
+      });
   }
 }];
 
