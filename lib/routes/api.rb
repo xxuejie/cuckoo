@@ -3,6 +3,39 @@ require 'json'
 
 class CuckooApi < Sinatra::Base
   include Helpers::Api
+  include Helpers::Url
+
+  get '/api/signout.json' do
+    set_session_user! nil
+    result_ok({})
+  end
+
+  post '/api/signin.json' do
+    p = json_request!
+
+    u = User.authenticate(p[:login_name], p[:password])
+    if u
+      set_session_user! u
+      result_ok({})
+    else
+      result_error("Login name or password is incorrect!")
+    end
+  end
+
+  post '/api/signup.json' do
+    p = json_request!
+
+    begin
+      u = User.create_with_check({login_name: p[:login_name],
+                                   password: p[:password],
+                                   avatar: p[:avatar],
+                                   description: p[:description]})
+      set_session_user! u
+      result_ok({})
+    rescue ArgumentError => e
+      result_error(e.message)
+    end
+  end
 
   get '/api/me.json' do
     myself = check_api_login!

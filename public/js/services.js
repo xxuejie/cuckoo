@@ -9,6 +9,8 @@ angular.module('cuckooApp.services', ['ngResource']).
   value('version', '0.1').
   config(function ($httpProvider) {
     $httpProvider.responseInterceptors.push('cuckooApiInterceptor');
+    $httpProvider.defaults.headers.post['Content-Type'] =
+      'application/x-www-form-urlencoded';
   }).
   factory('cuckooApiInterceptor', function($q, Page, $location) {
     function success(response) {
@@ -23,7 +25,7 @@ angular.module('cuckooApp.services', ['ngResource']).
     function error(response) {
       if (response.status === 403) {
         // login error, redirect to signin page directly
-        window.location = "/signin.html";
+        $location.path("/signin");
       } else {
         Page.setError("Network error occurs! Status code: " + response.status);
       }
@@ -46,7 +48,7 @@ angular.module('cuckooApp.services', ['ngResource']).
                    {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
           success(function(data) {
             if (data) {
-              user.followed = data.data.followed;
+              user.followed = data.followed;
             }
           });
       },

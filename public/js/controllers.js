@@ -108,17 +108,54 @@ var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
                {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
       success(function(data) {
         if (data) {
-          $scope.me = data.data;
-          $scope.origin_avatar = data.data.avatar;
+          $scope.me = data;
+          $scope.origin_avatar = data.avatar;
           Page.setSuccess("Update succeeded!");
         }
       });
   }
 }];
 
+var CuckooSigninCtrl = ['$scope', '$http', '$location', 'Page',
+                        function($scope, $http, $location, Page) {
+  $scope.submit = function() {
+    if (!($scope.login_name && $scope.password)) {
+      Page.setError("Login name/Password cannot be empty!");
+    } else {
+      $http.post('api/signin.json',
+                 {login_name: $scope.login_name, password: $scope.password}).
+        success(function(data) {
+          if (data) {
+            $location.path('/');
+          }
+        });
+    }
+  }
+}];
+
+var CuckooSignupCtrl = ['$scope', '$http', '$location', 'Page',
+                        function($scope, $http, $location, Page) {
+  $scope.submit = function() {
+    if (!($scope.login_name && $scope.password)) {
+      Page.setError("Login name/Password cannot be empty!");
+    } else {
+      $http.post('api/signup.json',
+                 {login_name: $scope.login_name,
+                  password: $scope.password,
+                  avatar: $scope.avatar,
+                  description: $scope.description}).
+        success(function(data) {
+          if (data) {
+            $location.path('/');
+          }
+        });
+    }
+  }
+}];
+
 // Page controller, changes title and active item in navigation
 // bar according to current view
-var CuckooPageCtrl = function($scope, Page) {
+var CuckooPageCtrl = function($scope, Page, $http, $location) {
   $scope.page = Page;
   $scope.$on('$routeChangeSuccess', function(scope, next, current) {
     Page.setError("");
@@ -127,5 +164,13 @@ var CuckooPageCtrl = function($scope, Page) {
   $scope.getNavItemClass = function(item) {
     return Page.isActiveItem(item) ? "active" : "";
   }
+
+  $scope.signout = function() {
+    $http.get('api/signout.json').success(function(data) {
+      if (data) {
+        $location.path('/signin');
+      }
+    });
+  }
 };
-CuckooPageCtrl.$inject = ['$scope', 'Page'];
+CuckooPageCtrl.$inject = ['$scope', 'Page', '$http', '$location'];

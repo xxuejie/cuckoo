@@ -1,0 +1,14 @@
+<div class="container">
+  <form class="form-signin-signup form-signup">
+    <h2 class="form-signin-signup-heading">Please fill in your information:</h2>
+    <label>Your login name?</label>
+    <input type="text" class="input-block-level" placeholder="Login name" ng-model="login_name" />
+    <label>And your password?</label>
+    <input type="password" class="input-block-level" placeholder="Password" ng-model="password" />
+    <label>You can enter your email address here, we will use your gravatar here. If you don't trust us, feel free to enter the gravatar URL for your avatar directly, or enter URL from another site.</label>
+    <input type="text" class="input-block-level" placeholder="Avatar" ng-model="avatar" />
+    <label>Would you mind write a little description of you?</label>
+    <textarea rows="3" class="input-block-level" placeholder="Description" ng-model="description"></textarea>
+    <button class="btn btn-large btn-primary" ng-click="submit()">Sign up</button>
+  </form>
+</div>
