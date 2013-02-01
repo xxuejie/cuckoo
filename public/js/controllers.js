@@ -17,8 +17,7 @@ var CuckooHomeCtrl = ['$scope', '$http', '$filter', 'TimeUtils', 'Page', functio
 
   $scope.submit = function(newTweet) {
     $http.post('api/tweets.json',
-               {content: $scope.newTweet},
-               {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
+               {content: $scope.newTweet}).
       success(
         function(data) {
           if (data) {
@@ -104,8 +103,7 @@ var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
       changes.password = $scope.password;
     }
 
-    $http.post('api/me.json', changes,
-               {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
+    $http.post('api/me.json', changes).
       success(function(data) {
         if (data) {
           $scope.me = data;

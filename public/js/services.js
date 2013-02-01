@@ -44,8 +44,7 @@ angular.module('cuckooApp.services', ['ngResource']).
         var new_follow_state = !user.followed;
         $http.post('api/follow.json',
                    {id: user.id,
-                    follow: new_follow_state},
-                   {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).
+                    follow: new_follow_state}).
           success(function(data) {
             if (data) {
               user.followed = data.followed;
