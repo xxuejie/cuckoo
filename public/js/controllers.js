@@ -17,14 +17,14 @@ var CuckooHomeCtrl = ['$scope', '$http', '$filter', 'TimeUtils', 'Page', functio
 
   Page.setView('Home');
 
-  $http.get('api/me.json').success(function(data) {
+  $http.get('/api/me.json').success(function(data) {
     $scope.me = data;
 
     loadingMe = false;
     checkLoading();
   });
 
-  $http.get('api/tweets.json').success(function(data) {
+  $http.get('/api/tweets.json').success(function(data) {
     $scope.tweets = data;
 
     loadingTweets = false;
@@ -34,7 +34,7 @@ var CuckooHomeCtrl = ['$scope', '$http', '$filter', 'TimeUtils', 'Page', functio
   $scope.newTweet = "";
 
   $scope.submit = function(newTweet) {
-    $http.post('api/tweets.json',
+    $http.post('/api/tweets.json',
                {content: $scope.newTweet}).
       success(
         function(data) {
@@ -66,7 +66,7 @@ var CuckooUserCtrl = ['$scope', '$routeParams', '$http',
                       'FollowUtils', 'TimeUtils', 'Page',
                       function($scope, $routeParams, $http,
                                FollowUtils, TimeUtils, Page) {
-  $http.get('api/user/' + $routeParams.name + '.json').success(function(data) {
+  $http.get('/api/user/' + $routeParams.name + '.json').success(function(data) {
     Page.setLoading(false);
 
     if (data) {
@@ -93,7 +93,7 @@ var CuckooUserListCtrl = ['$scope', '$http', 'FollowUtils', 'Page',
                           function($scope, $http, FollowUtils, Page) {
   Page.setView("Users");
 
-  $http.get('api/users.json').success(function(data) {
+  $http.get('/api/users.json').success(function(data) {
     Page.setLoading(false);
 
     $scope.users = data;
@@ -105,7 +105,7 @@ var CuckooUserListCtrl = ['$scope', '$http', 'FollowUtils', 'Page',
 var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
   Page.setView("Me");
 
-  $http.get('api/me.json').success(function(data) {
+  $http.get('/api/me.json').success(function(data) {
     Page.setLoading(false);
 
     $scope.me = data;
@@ -127,7 +127,7 @@ var CuckooEditCtrl = ['$scope', '$http', 'Page', function($scope, $http, Page) {
       changes.password = $scope.password;
     }
 
-    $http.post('api/me.json', changes).
+    $http.post('/api/me.json', changes).
       success(function(data) {
         if (data) {
           $scope.me = data;
@@ -147,7 +147,7 @@ var CuckooSigninCtrl = ['$scope', '$http', '$location', 'Page',
     if (!($scope.login_name && $scope.password)) {
       Page.setError("Login name/Password cannot be empty!");
     } else {
-      $http.post('api/signin.json',
+      $http.post('/api/signin.json',
                  {login_name: $scope.login_name, password: $scope.password}).
         success(function(data) {
           if (data) {
@@ -167,7 +167,7 @@ var CuckooSignupCtrl = ['$scope', '$http', '$location', 'Page',
     if (!($scope.login_name && $scope.password)) {
       Page.setError("Login name/Password cannot be empty!");
     } else {
-      $http.post('api/signup.json',
+      $http.post('/api/signup.json',
                  {login_name: $scope.login_name,
                   password: $scope.password,
                   avatar: $scope.avatar,
@@ -195,7 +195,7 @@ var CuckooPageCtrl = function($scope, Page, $http, $location) {
   }
 
   $scope.signout = function() {
-    $http.get('api/signout.json').success(function(data) {
+    $http.get('/api/signout.json').success(function(data) {
       if (data) {
         $location.path('/signin');
       }

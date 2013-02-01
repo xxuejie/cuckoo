@@ -11,9 +11,9 @@ describe('Cuckoo controllers', function() {
 
     beforeEach(inject(function($controller, $rootScope, _$httpBackend_) {
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('api/me.json').
+      $httpBackend.expectGET('/api/me.json').
         respond({"id": 1, "login_name": "defmacro"});
-      $httpBackend.expectGET('api/tweets.json').
+      $httpBackend.expectGET('/api/tweets.json').
         respond([{"content": "test tweet"}]);
       scope = $rootScope.$new();
       homeCtrl = $controller(CuckooHomeCtrl, {$scope: scope});
@@ -36,7 +36,7 @@ describe('Cuckoo controllers', function() {
       scope = $rootScope.$new();
       routeParams = {"name": "aaa"};
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('api/user/aaa.json').
+      $httpBackend.expectGET('/api/user/aaa.json').
         respond({"status": "ok", "data": {"id": 1,
                                           "login_name": "aaa",
                                           "tweets": [
@@ -69,7 +69,7 @@ describe('Cuckoo controllers', function() {
 
     beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('api/users.json').
+      $httpBackend.expectGET('/api/users.json').
         respond([{"login_name": "test_user",
                   "avatar": "http://www.gravatar.com/avatar/00000000000000000000000000000000",
                   "description": "I'm just an evil test account-_-",
