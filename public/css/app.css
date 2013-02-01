@@ -44,8 +44,12 @@ button.btn-follow {
   border-radius: 4px;
 }
 
-.home-info {
-  margin-left: 100px;
+.home-avatar {
+  padding-bottom: 10px;
+}
+
+.home-name {
+  padding: 25px 0 0 100px;
 }
 
 .home-grid > div {
