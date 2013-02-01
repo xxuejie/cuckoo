@@ -14,7 +14,7 @@ module Helpers
 
       if avatar.index('@')
         # email address
-        "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(avatar).upcase}"
+        "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(avatar)}"
       else
         avatar
       end

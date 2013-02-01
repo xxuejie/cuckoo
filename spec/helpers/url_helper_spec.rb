@@ -11,7 +11,7 @@ describe "url helper" do
 
   it "should normalize email into gravatar url" do
     email = "test@example.com"
-    avatar = "http://www.gravatar.com/avatar/55502F40DC8B7C769880B10874ABC9D0"
+    avatar = "http://www.gravatar.com/avatar/55502f40dc8b7c769880b10874abc9d0"
 
     expect(normalize_avatar_url "test@example.com").to eq(avatar)
   end
