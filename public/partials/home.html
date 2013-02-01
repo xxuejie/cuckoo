@@ -25,7 +25,7 @@
     <div>
       <textarea class="tweet-box" rows="3" ng-model="newTweet" placeholder="Type your new tweet here..."></textarea>
       <div>
-        <button class="btn btn-primary" ng-click="submit(newTweet)">Submit</button>
+        <button class="btn btn-primary" ng-click="submit(newTweet)" ng-disabled="invalid(newTweet)">Submit</button>
       </div>
     </div>
   </div>

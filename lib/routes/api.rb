@@ -43,19 +43,18 @@ class CuckooApi < Sinatra::Base
 
     content = json_request![:content]
 
-    if content
-      tweet = Tweet.create({content: content,
-                             # Time is in milliseconds
-                             time: "#{Time.now.to_i * 1000}",
-                             user: user})
-      result_ok({content: tweet.content,
-                           time: tweet.time,
-                           user_id: user.id,
-                           user_name: user.login_name})
-    else
-      result_error("Content is required!")
-    end
-  end
+    return result_error("Content is missing!") if content.nil?
+    return result_error("Content can not exceed 140 characters!") if content.length > 140
+
+    tweet = Tweet.create({content: content,
+                           # Time is in milliseconds
+                           time: "#{Time.now.to_i * 1000}",
+                           user: user})
+    result_ok({content: tweet.content,
+                time: tweet.time,
+                user_id: user.id,
+                user_name: user.login_name})
+   end
 
   get '/api/users.json' do
     myself = check_api_login!

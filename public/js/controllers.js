@@ -31,6 +31,19 @@ var CuckooHomeCtrl = ['$scope', '$http', '$filter', 'TimeUtils', 'Page', functio
         });
   }
 
+  $scope.invalid = function(newTweet) {
+    if (!newTweet) {
+      // undefined and empty string
+      return true;
+    }
+
+    if (newTweet.length > 140) {
+      return true;
+    }
+
+    return false;
+  }
+
   $scope.formatTime = TimeUtils.formatTime;
 }];
 
