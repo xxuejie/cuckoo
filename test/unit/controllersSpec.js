@@ -20,8 +20,11 @@ describe('Cuckoo controllers', function() {
     }));
 
 
-    it('should ....', function() {
-      //spec body
+    it('should load the page', function() {
+      $httpBackend.flush();
+
+      expect(scope.me).not.toBe(undefined);
+      expect(scope.tweets.length).toBe(1);
     });
   });
 
