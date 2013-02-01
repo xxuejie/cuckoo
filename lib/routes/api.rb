@@ -116,8 +116,10 @@ class CuckooApi < Sinatra::Base
     if follower
       if should_follow
         myself.followers.add(follower)
+        follower.following.add(myself)
       else
         myself.followers.delete(follower)
+        follower.following.delete(myself)
       end
       result_ok({followed: should_follow})
     else
