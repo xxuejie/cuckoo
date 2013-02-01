@@ -92,7 +92,7 @@ class CuckooApi < Sinatra::Base
                 myself: u.id == myself.id,
                 tweets: tweets})
     else
-      result_error("User #{params[:name]} does not exist!}")
+      result_error("User #{params[:name]} does not exist!")
     end
   end
 
