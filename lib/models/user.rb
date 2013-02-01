@@ -3,8 +3,6 @@ require 'ohm'
 
 require 'helpers/authentication_helper'
 
-require 'pry'
-
 class User < Ohm::Model
   attribute :login_name
   index :login_name

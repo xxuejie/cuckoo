@@ -1,8 +1,6 @@
 require 'sinatra/base'
 require 'json'
 
-require 'pry'
-
 class CuckooApi < Sinatra::Base
   include Helpers::Api
 
