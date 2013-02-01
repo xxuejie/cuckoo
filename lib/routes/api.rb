@@ -75,6 +75,28 @@ class CuckooApi < Sinatra::Base
     result.to_json
   end
 
+  get '/api/user/:name.json' do
+    check_api_login!
+
+    myself = session[:user]
+    u = User.find({login_name: params[:name]}).first
+    if u
+      tweets = []
+      u.tweets.each do |tweet|
+        tweets << {content: tweet.content, time: tweet.time}
+      end
+      result_ok({id: u.id,
+                login_name: u.login_name,
+                avatar: u.avatar,
+                description: u.description,
+                followed: myself.followers.member?(u),
+                self: u.id == myself.id,
+                tweets: tweets})
+    else
+      result_error("User #{params[:name]} does not exist!}")
+    end
+  end
+
   post '/api/follow.json' do
     check_api_login!
 

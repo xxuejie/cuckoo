@@ -1,6 +1,6 @@
 <!-- Tweet template, the tweet is stored in "tweet" -->
 <div>
-  <strong><a ng-href="/user/{{tweet.user_id}}">{{tweet.user_name}}</a></strong>
+  <strong><a ng-href="/user/{{tweet.user_name}}">{{tweet.user_name}}</a></strong>
   <small class="tweet-time" ng-bind="formatTime(tweet.time)"></small>
 </div>
 <p>{{tweet.content}}</p>

@@ -8,11 +8,14 @@
 angular.module('cuckooApp.services', ['ngResource']).
   value('version', '0.1').
   factory('User', function($resource) {
-    return $resource('api/user/:userId.json', {}, {});
+    return $resource('api/user/:name.json', {}, {});
   }).
   factory('FollowUtils', function($http) {
     return {
       "toggleFollow": function(user) {
+        if (!user) {
+          return;
+        }
         var new_follow_state = !user.followed;
         $http.post('api/follow.json',
                    {id: user.id,
@@ -21,17 +24,16 @@ angular.module('cuckooApp.services', ['ngResource']).
           success(function(data) {
             if (data.status === 'ok') {
               user.followed = data.data.followed;
-              console.log(user);
             } else if (data.status === 'error') {
               console.log(data.error);
             }
           });
       },
       "getFollowText": function(user) {
-        return user.followed ? "Followed" : "Follow";
+        return (user && user.followed) ? "Followed" : "Follow";
       },
       "getFollowClass": function(user) {
-        return user.followed ? "btn-primary" : "";
+        return (user && user.followed) ? "btn-primary" : "";
       }
     };
   }).

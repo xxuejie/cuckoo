@@ -17,9 +17,9 @@ class CuckooServer < Sinatra::Base
     redirect to('/index.html#/users')
   end
 
-  get '/user/:id' do
+  get '/user/:name' do
     check_login!
-    redirect to("/index.html#/user/#{params[:id]}")
+    redirect to("/index.html#/user/#{params[:name]}")
   end
 
   get '/signout' do

@@ -37,18 +37,22 @@ var CuckooUserCtrl = ['$scope', '$routeParams', 'User',
                       'FollowUtils', 'TimeUtils', 'Page',
                       function($scope, $routeParams, User,
                                FollowUtils, TimeUtils, Page) {
-  User.get({userId: $routeParams.id}, function(user) {
-    var i;
+  User.get({name: $routeParams.name}, function(data) {
+    if (data.status === 'ok') {
+      var i;
 
-    $scope.user = user;
-    if (user.tweets) {
-      for (i = 0; i < user.tweets.length; i++) {
-        user.tweets[i].user_id = user.id;
-        user.tweets[i].user_name = user.login_name;
+      var user = $scope.user = data.data;
+      if (user.tweets) {
+        for (i = 0; i < user.tweets.length; i++) {
+          user.tweets[i].user_id = user.id;
+          user.tweets[i].user_name = user.login_name;
+        }
       }
-    }
 
-    Page.setView(user.login_name);
+      Page.setView(user.login_name);
+    } else if (data.status === 'error') {
+      console.log(data.error);
+    }
   });
 
   $scope.followUtils = FollowUtils;
