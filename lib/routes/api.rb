@@ -80,8 +80,7 @@ class CuckooApi < Sinatra::Base
     return result_error("Content can not exceed 140 characters!") if content.length > 140
 
     tweet = Tweet.create({content: content,
-                           # Time is in milliseconds
-                           time: "#{Time.now.to_i * 1000}",
+                           time: get_current_time,
                            user: user})
     result_ok({content: tweet.content,
                 time: tweet.time,

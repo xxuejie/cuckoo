@@ -37,5 +37,10 @@ module Helpers
         following: u.following.size
       }
     end
+
+    def get_current_time
+      # Time is in milliseconds
+      "#{Time.now.to_i * 1000}"
+    end
   end
 end
