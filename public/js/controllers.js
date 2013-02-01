@@ -45,11 +45,11 @@ var CuckooHomeCtrl = ['$scope', '$http', '$filter', 'TimeUtils', 'Page', functio
   $scope.formatTime = TimeUtils.formatTime;
 }];
 
-var CuckooUserCtrl = ['$scope', '$routeParams', 'User',
+var CuckooUserCtrl = ['$scope', '$routeParams', '$http',
                       'FollowUtils', 'TimeUtils', 'Page',
-                      function($scope, $routeParams, User,
+                      function($scope, $routeParams, $http,
                                FollowUtils, TimeUtils, Page) {
-  User.get({name: $routeParams.name}, function(data) {
+  $http.get('api/user/' + $routeParams.name + '.json').success(function(data) {
     if (data) {
       var i;
 

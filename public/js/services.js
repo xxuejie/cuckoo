@@ -33,9 +33,6 @@ angular.module('cuckooApp.services', ['ngResource']).
       return promise.then(success, error);
     }
   }).
-  factory('User', function($resource) {
-    return $resource('api/user/:name.json', {}, {});
-  }).
   factory('FollowUtils', function($http) {
     return {
       "toggleFollow": function(user) {
