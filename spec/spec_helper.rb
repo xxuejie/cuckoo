@@ -1,6 +1,6 @@
 ENV['RACK_ENV'] = 'test'
 # Use a different database for tests
-ENV['REDIS_URL'] ||= "redis://localhost:6379/11"
+ENV['REDIS_URL'] ||= "redis://localhost:17890/11"
 
 require 'rubygems'
 require 'bundler'
